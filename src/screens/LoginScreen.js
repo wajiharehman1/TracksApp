@@ -8,6 +8,7 @@ const LoginScreen = ({navigation}) => {
       buttonText={'Login'}
       promptText={"Don't have an account?"}
       promptTouchable={'Register!'}
+      onButtonPress={() => navigation.navigate('MainNav')}
       onTouchablePress={() => navigation.navigate('Signup')}
     />
   );

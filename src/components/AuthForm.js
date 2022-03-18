@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import {Input, Card, CardSection, Button} from '../common/';
-import Styles from '../styles/TextStyles';
+import {Input, Card, CardSection, Button, StatusBar} from '../common/';
+import Styles from '../styles/Styles';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const AuthForm = ({
@@ -12,17 +12,13 @@ const AuthForm = ({
   onTouchablePress,
 }) => {
   return (
-    <KeyboardAwareScrollView style={Styles.mainContainerLight}>
-      <View
-        styles={{
-          flex: 1,
-          borderWidth: 1,
-          borderColor: 'red',
-          width: '100%',
-        }}>
+    <KeyboardAwareScrollView
+      contentContainerStyle={{flexGrow: 1, backgroundColor: '#FFF'}}
+      scrollEnabled={true}>
+      <View style={styles.mainContainerLight}>
         <Image
           source={require('../assets/logo_blue_nobg.png')}
-          style={Styles.logoStyle}
+          style={styles.logoStyle}
         />
         <Text style={Styles.textStyleGrey}>{'Welcome to Todo App!'}</Text>
         <Text style={Styles.headerStyle}>{'Keeping you organized'}</Text>
@@ -32,9 +28,17 @@ const AuthForm = ({
           placeholder={'Enter password'}
           secureTextEntry
         />
-        <Button>{buttonText}</Button>
+        <Button
+          onPress={onButtonPress}
+          backgroundColor={'#2E4670'}
+          borderColor={'#2E4670'}
+          textColor={'#FFF'}
+          marginHorizontal={20}
+          marginVertical={10}>
+          {buttonText}
+        </Button>
       </View>
-      <View style={{flex: 1, justifyContent: 'flex-end'}}>
+      <View>
         <View style={styles.promptContainer}>
           <Text>{promptText}</Text>
           <TouchableOpacity style={{marginLeft: 5}} onPress={onTouchablePress}>
@@ -50,7 +54,7 @@ const styles = StyleSheet.create({
   promptContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingVertical: 10,
+    paddingVertical: 20,
     color: 'gray',
     marginTop: 30,
   },
@@ -60,6 +64,17 @@ const styles = StyleSheet.create({
   },
   buttonSpace: {
     marginVertical: 30,
+  },
+  logoStyle: {
+    alignSelf: 'center',
+    width: 200,
+    height: 200,
+  },
+  mainContainerLight: {
+    backgroundColor: '#FFF',
+    flex: 1,
+    flexGrow: 1,
+    justifyContent: 'center',
   },
 });
 

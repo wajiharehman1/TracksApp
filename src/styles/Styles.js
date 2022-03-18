@@ -8,8 +8,6 @@ const styles = StyleSheet.create({
   mainContainerLight: {
     backgroundColor: '#FFF',
     flex: 1,
-    // flexDirection: 'column',
-    // justifyContent: 'center',
   },
   logoStyle: {
     alignSelf: 'center',
@@ -35,6 +33,13 @@ const styles = StyleSheet.create({
     fontSize: 25,
     textAlign: 'center',
     paddingVertical: 5,
+  },
+  containerBody: {
+    backgroundColor: '#FFF',
+    flex: 1,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    padding: 30,
   },
 });
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import {Text, Input, Button} from '../common';
 import AuthForm from '../components/AuthForm';
 
 const SignUpScreen = ({navigation}) => {

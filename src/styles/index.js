@@ -1,2 +1,2 @@
-export * from './TextStyles';
+export * from './Styles';
 export * from './Background';

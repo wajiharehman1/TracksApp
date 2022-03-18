@@ -35,7 +35,6 @@ const styles = {
     marginBottom: 10,
   },
   containerStyle: {
-    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     marginVertical: 10,

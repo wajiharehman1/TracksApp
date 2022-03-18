@@ -1,21 +1,20 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import HomeScreen from './screens/HomeScreen';
-import SplashScreen from './screens/SplashScreen';
 import AuthNavigator from './AuthNavigator';
 import MainNavigator from './MainNavigator';
-
+import AnimatedSplash from 'react-native-animated-splash';
 const Stack = createStackNavigator();
 
 const NavigationWrapper = () => {
+  AnimatedSplash.hide();
+
   return (
     <Stack.Navigator
-      initialRouteName="Splash"
+      initialRouteName="AuthNav"
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="MainNav" component={MainNavigator} />
       <Stack.Screen name="AuthNav" component={AuthNavigator} />
     </Stack.Navigator>
@@ -24,7 +23,6 @@ const NavigationWrapper = () => {
 
 function RootNavigator() {
   console.log('Root Nav');
-
   return (
     <NavigationContainer>
       <NavigationWrapper />
