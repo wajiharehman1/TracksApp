@@ -1,17 +1,49 @@
 import React from 'react';
 import AuthForm from '../components/AuthForm';
+import {connect} from 'react-redux';
+import {emailChanged, passwordChanged, loginUser} from '../actions/AuthActions';
 
-const LoginScreen = ({navigation}) => {
-  console.log('Login Screen');
+const LoginScreen = props => {
   return (
     <AuthForm
       buttonText={'Login'}
       promptText={"Don't have an account?"}
       promptTouchable={'Register!'}
-      onButtonPress={() => navigation.navigate('MainNav')}
-      onTouchablePress={() => navigation.navigate('Signup')}
+      onButtonPress={() => onLogin(props)}
+      onTouchablePress={() => props.navigation.navigate('Signup')}
+      onChangeEmailText={text => onEmailChange(props, text)}
+      onChangePasswordText={text => onPasswordChange(props, text)}
+      errorText={props.error}
     />
   );
 };
 
-export default LoginScreen;
+const mapStateToProps = state => {
+  return {
+    email: state.auth.email,
+    password: state.auth.password,
+    error: state.auth.error,
+  };
+};
+
+const onEmailChange = (props, text) => {
+  console.log('onEmailChange function', text);
+  props.emailChanged(text);
+};
+
+const onPasswordChange = (props, text) => {
+  console.log('onPasswordChange function', text);
+  props.passwordChanged(text);
+};
+
+const onLogin = props => {
+  const {email, password} = props;
+  props.loginUser({email, password});
+  console.log('Submitting', email + ' ' + password);
+};
+
+export default connect(mapStateToProps, {
+  emailChanged,
+  passwordChanged,
+  loginUser,
+})(LoginScreen);

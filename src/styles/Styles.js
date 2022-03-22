@@ -41,6 +41,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
     padding: 30,
   },
+  categoryText: {
+    fontWeight: 'bold',
+    marginRight: 20,
+    fontSize: 15,
+  },
 });
 
 export default styles;

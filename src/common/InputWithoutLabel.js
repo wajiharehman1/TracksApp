@@ -1,12 +1,13 @@
 import React from 'react';
 import {StyleSheet, View, TextInput} from 'react-native';
 
-const InputWithoutLabel = ({placeholder}) => {
+const InputWithoutLabel = ({placeholder, onChangeText}) => {
   return (
     <View>
       <TextInput
         style={styles.inputStyle}
-        placeholder={placeholder}></TextInput>
+        placeholder={placeholder}
+        onChangeText={onChangeText}></TextInput>
     </View>
   );
 };
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     color: '#676767',
     fontSize: 15,
-    borderBottomColor: '#676767',
+    borderBottomColor: '#C1C1C1',
     borderBottomWidth: 1,
   },
 });

@@ -10,6 +10,9 @@ const AuthForm = ({
   promptText,
   promptTouchable,
   onTouchablePress,
+  onChangeEmailText,
+  onChangePasswordText,
+  errorText,
 }) => {
   return (
     <KeyboardAwareScrollView
@@ -22,12 +25,18 @@ const AuthForm = ({
         />
         <Text style={Styles.textStyleGrey}>{'Welcome to Todo App!'}</Text>
         <Text style={Styles.headerStyle}>{'Keeping you organized'}</Text>
-        <Input label="Email" placeholder={'Enter email'} />
+        <Input
+          label="Email"
+          placeholder={'Enter email'}
+          onChangeText={onChangeEmailText}
+        />
         <Input
           label="Password"
           placeholder={'Enter password'}
           secureTextEntry
+          onChangeText={onChangePasswordText}
         />
+        <Text style={styles.errorTextStyle}>{errorText}</Text>
         <Button
           onPress={onButtonPress}
           backgroundColor={'#2E4670'}
@@ -75,6 +84,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexGrow: 1,
     justifyContent: 'center',
+  },
+  errorTextStyle: {
+    color: 'red',
+    fontSize: 15,
+    textAlign: 'center',
   },
 });
 

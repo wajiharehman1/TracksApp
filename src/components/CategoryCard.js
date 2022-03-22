@@ -3,9 +3,9 @@ import {Text, View, StyleSheet, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-const CategoryCard = () => {
+const CategoryCard = ({onPress, title}) => {
   return (
-    <TouchableOpacity style={[styles.cardStyle]}>
+    <TouchableOpacity style={[styles.cardStyle]} onPress={onPress}>
       <View>
         <Image />
         <Text>
@@ -14,7 +14,7 @@ const CategoryCard = () => {
       </View>
       <View>
         <View style={styles.innerRow}>
-          <Text style={styles.categoryText}>Category</Text>
+          <Text style={styles.categoryText}>{title}</Text>
           <Text>Count</Text>
         </View>
       </View>

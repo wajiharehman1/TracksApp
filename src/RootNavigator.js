@@ -4,6 +4,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import AuthNavigator from './AuthNavigator';
 import MainNavigator from './MainNavigator';
 import AnimatedSplash from 'react-native-animated-splash';
+import {navigationRef} from './NavigationService';
+
 const Stack = createStackNavigator();
 
 const NavigationWrapper = () => {
@@ -24,7 +26,7 @@ const NavigationWrapper = () => {
 function RootNavigator() {
   console.log('Root Nav');
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <NavigationWrapper />
     </NavigationContainer>
   );

@@ -4,3 +4,4 @@ export * from './CardSection';
 export * from './Button';
 export * from './Oval';
 export * from './InputWithoutLabel';
+export * from './CustomModal';
