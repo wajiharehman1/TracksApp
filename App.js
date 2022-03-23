@@ -13,11 +13,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <View style={{flex: 1}}>
-        <StatusBar
-          backgroundColor="transparent"
-          translucent={true}
-          barStyle="dark-content"
-        />
+        <StatusBar backgroundColor="transparent" translucent />
         <RootNavigator />
       </View>
     </Provider>

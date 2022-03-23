@@ -9,7 +9,6 @@ import auth from '@react-native-firebase/auth';
 import * as RootNavigation from '../NavigationService';
 
 export const emailChanged = text => {
-  console.log('AuthActions', text);
   return {
     type: EMAIL_CHANGED,
     payload: text,
@@ -17,8 +16,6 @@ export const emailChanged = text => {
 };
 
 export const passwordChanged = text => {
-  console.log('AuthActions Password', text);
-
   return {
     type: PASSWORD_CHANGED,
     payload: text,
@@ -26,7 +23,7 @@ export const passwordChanged = text => {
 };
 
 export const loginUser = ({email, password}) => {
-  console.log('loginUser here', email + ' ' + password);
+  console.log('loginUser function', email + ' ' + password);
   return dispatch => {
     auth()
       .signInWithEmailAndPassword(email, password)
@@ -35,12 +32,14 @@ export const loginUser = ({email, password}) => {
         resetFields(dispatch);
       })
       .catch(error => {
-        () => loginUserFail(dispatch);
+        loginUserFail(dispatch);
+        console.log('loginUserFail', error);
       });
   };
 };
 
 const loginUserSuccess = (dispatch, user) => {
+  console.log('loginUserSuccess', user);
   dispatch({
     type: LOGIN_USER_SUCCESS,
     payload: user,
@@ -55,7 +54,6 @@ const resetFields = dispatch => {
 };
 
 export const registerUser = ({email, password}) => {
-  console.log('registerUser here', email + ' ' + password);
   return dispatch => {
     auth()
       .createUserWithEmailAndPassword(email, password)

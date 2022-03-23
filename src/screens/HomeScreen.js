@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import {Button, Oval} from '../common';
 import styles from '../styles/Styles';
 import {categoriesFetch} from '../actions';
@@ -11,7 +11,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 const HomeScreen = props => {
   useEffect(() => {
     props.categoriesFetch();
-    console.log(props.categories);
+    console.log('useEffect in HomeScreen', props.categories);
   }, []);
   return (
     <View style={({flex: 1}, styles.mainContainerLight)}>
@@ -35,14 +35,27 @@ const HomeScreen = props => {
       </View>
       <KeyboardAwareScrollView>
         <View style={stylesLocal.bottomContainer}>
-          <CategoryCard
-            onPress={() =>
-              props.navigation.navigate('ViewTasks', {
-                categoryTitle: 'Category 1',
-              })
-            }
-            title={'All'}
-          />
+          {props.categories.length > 0 ? (
+            _.map(props.categories, item => {
+              return (
+                <CategoryCard
+                  category={item}
+                  key={item.uid}
+                  onPress={() => {
+                    props.navigation.navigate('ViewTasks', {
+                      categoryTitle: item.category_title,
+                    });
+                  }}
+                />
+              );
+            })
+          ) : (
+            <View>
+              <Text style={stylesLocal.noCategoriesText}>
+                No categories found
+              </Text>
+            </View>
+          )}
         </View>
       </KeyboardAwareScrollView>
     </View>
@@ -76,6 +89,13 @@ const stylesLocal = StyleSheet.create({
     padding: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  noCategoriesText: {
+    fontSize: 18,
+    color: 'gray',
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    marginHorizontal: 20,
   },
 });
 

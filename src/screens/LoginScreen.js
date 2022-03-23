@@ -27,19 +27,19 @@ const mapStateToProps = state => {
 };
 
 const onEmailChange = (props, text) => {
-  console.log('onEmailChange function', text);
+  console.log('onEmailChange', text);
   props.emailChanged(text);
 };
 
 const onPasswordChange = (props, text) => {
-  console.log('onPasswordChange function', text);
+  console.log('onPasswordChange', text);
   props.passwordChanged(text);
 };
 
 const onLogin = props => {
   const {email, password} = props;
+  console.log('Login button pressed');
   props.loginUser({email, password});
-  console.log('Submitting', email + ' ' + password);
 };
 
 export default connect(mapStateToProps, {

@@ -8,7 +8,6 @@ import {useNavigation} from '@react-navigation/native';
 
 const AppWrapper = ({headerText, children}) => {
   const navigation = useNavigation();
-  console.log();
   return (
     <SafeAreaView style={Styles.mainContainer}>
       <View>

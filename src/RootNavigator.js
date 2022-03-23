@@ -24,7 +24,6 @@ const NavigationWrapper = () => {
 };
 
 function RootNavigator() {
-  console.log('Root Nav');
   return (
     <NavigationContainer ref={navigationRef}>
       <NavigationWrapper />

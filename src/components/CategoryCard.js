@@ -1,21 +1,24 @@
 import React from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import NavigationService from '../NavigationService';
 
-const CategoryCard = ({onPress, title}) => {
+const CategoryCard = ({onPress, category}) => {
+  console.log('Category', category);
+  const id = category.uid;
   return (
-    <TouchableOpacity style={[styles.cardStyle]} onPress={onPress}>
-      <View>
-        <Image />
-        <Text>
-          <FontAwesome5 name="briefcase" size={20} />
-        </Text>
-      </View>
+    <TouchableOpacity
+      style={[
+        styles.cardStyle,
+        category.category_color
+          ? {borderColor: category.category_color, borderWidth: 2}
+          : {borderColor: 'none', borderWidth: 0},
+      ]}
+      onPress={onPress}>
       <View>
         <View style={styles.innerRow}>
-          <Text style={styles.categoryText}>{title}</Text>
-          <Text>Count</Text>
+          <Text style={styles.categoryText}>{category.category_title}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -45,6 +48,7 @@ const styles = StyleSheet.create({
   innerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
   },
   categoryText: {
     fontWeight: 'bold',

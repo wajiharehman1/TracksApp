@@ -31,6 +31,7 @@ public class MainActivity extends ReactActivity {
 
         public void onCreate(Bundle saved) {
             super.onCreate(saved);
+
 //            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             initiateSplash();
         }
@@ -38,7 +39,6 @@ public class MainActivity extends ReactActivity {
         public void initiateSplash() {
             //Create dialog
             createSplashView(MainActivity.this);
-//            getActionBar().hide();
 
             setBackgroundImage(R.drawable.splash_bg);
             setSplashHideAnimation(SPLASHSLIDELEFT);

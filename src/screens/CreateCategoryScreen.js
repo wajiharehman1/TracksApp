@@ -19,6 +19,7 @@ import {
   titleChanged,
   colorChanged,
   addCategory,
+  categoryUpdate,
 } from '../actions/CategoryActions';
 // import {ColorPicker} from 'react-native-color-picker';
 
@@ -57,8 +58,8 @@ const CreateCategoryScreen = props => {
           Select a color for the category
         </Text>
         <ColorList props={props} onSelect={setCategoryColor} />
-        <Text>{categoryColor}</Text>
       </CustomModal>
+      <Text>{mapStateToProps}</Text>
     </AppWrapper>
   );
 };
@@ -79,7 +80,7 @@ const ColorList = ({props, onSelect}) => {
       <FlatList
         data={categoryColors}
         renderItem={({item}) => {
-          console.log(item);
+          console.log('item in cc', item);
           return (
             <TouchableOpacity
               style={{marginRight: 15}}
@@ -124,7 +125,6 @@ const mapStateToProps = state => {
   return {
     category_title: state.categories.category_title,
     category_color: state.categories.category_color,
-    // error: state.categories.error,
   };
 };
 
@@ -132,8 +132,6 @@ const onCategoryCreate = props => {
   const {category_title, category_color} = props;
   console.log('In Category Create', category_title + ' ' + category_color);
   props.addCategory({category_title, category_color});
-  // props.registerUser({email, password});
-  // console.log('Registering', email + ' ' + password);
 };
 
 const onTitleChange = (props, text) => {
@@ -145,8 +143,10 @@ const onColorChange = (props, color) => {
   console.log('onColorChange function', color);
   props.colorChanged(color);
 };
+
 export default connect(mapStateToProps, {
   titleChanged,
   colorChanged,
   addCategory,
+  categoryUpdate,
 })(CreateCategoryScreen);
