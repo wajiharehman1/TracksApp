@@ -14,7 +14,6 @@ import {Button, CustomModal} from '../common';
 import AppWrapper from '../components/AppWrapper';
 import {useNavigation} from '@react-navigation/native';
 import Styles from '../styles/Styles';
-import CategoryColors from '../utils/CategoryColorsList';
 import {
   titleChanged,
   colorChanged,
@@ -59,7 +58,6 @@ const CreateCategoryScreen = props => {
         </Text>
         <ColorList props={props} onSelect={setCategoryColor} />
       </CustomModal>
-      <Text>{mapStateToProps}</Text>
     </AppWrapper>
   );
 };
@@ -80,12 +78,12 @@ const ColorList = ({props, onSelect}) => {
       <FlatList
         data={categoryColors}
         renderItem={({item}) => {
-          console.log('item in cc', item);
+          // console.log('item in cc', item);
           return (
             <TouchableOpacity
               style={{marginRight: 15}}
               onPress={() => {
-                console.log('Color Pressed', item.label);
+                // console.log('Color Pressed', item.label);
                 onSelect(item.value);
                 onColorChange(props, item.value);
               }}>
@@ -123,14 +121,13 @@ const stylesLocal = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    category_title: state.categories.category_title,
-    category_color: state.categories.category_color,
+    category_title: state?.category?.category_title,
+    category_color: state?.category?.category_color,
   };
 };
 
 const onCategoryCreate = props => {
   const {category_title, category_color} = props;
-  console.log('In Category Create', category_title + ' ' + category_color);
   props.addCategory({category_title, category_color});
 };
 

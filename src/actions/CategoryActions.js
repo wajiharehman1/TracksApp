@@ -8,7 +8,6 @@ import {
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 
-import {useNavigation} from '@react-navigation/native';
 import * as RootNavigation from '../NavigationService';
 
 export const categoryUpdate = ({prop, value}) => {
@@ -41,7 +40,10 @@ export const addCategory = ({category_title, category_color}) => {
       .ref(`/users/${currentUser.uid}/categories`)
       .push({category_title, category_color})
       .then(() => {
-        dispatch({type: ADD_CATEGORY});
+        dispatch({
+          type: ADD_CATEGORY,
+          payload: {category_title, category_color},
+        });
         RootNavigation.navigate('Home');
       })
       .catch(error => console.log(error));

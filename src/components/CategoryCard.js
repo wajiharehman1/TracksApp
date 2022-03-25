@@ -1,11 +1,11 @@
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import NavigationService from '../NavigationService';
+// import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+// import NavigationService from '../NavigationService';
 
 const CategoryCard = ({onPress, category}) => {
-  console.log('Category', category);
+  // console.log('Category', category);
   const id = category.uid;
   return (
     <TouchableOpacity

@@ -11,7 +11,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 const HomeScreen = props => {
   useEffect(() => {
     props.categoriesFetch();
-    console.log('useEffect in HomeScreen', props.categories);
+    // console.log('useEffect in HomeScreen', props.categories);
   }, []);
   return (
     <View style={({flex: 1}, styles.mainContainerLight)}>
@@ -37,6 +37,7 @@ const HomeScreen = props => {
         <View style={stylesLocal.bottomContainer}>
           {props.categories.length > 0 ? (
             _.map(props.categories, item => {
+              // console.log('CategoryCard id', item.uid);
               return (
                 <CategoryCard
                   category={item}
@@ -44,6 +45,7 @@ const HomeScreen = props => {
                   onPress={() => {
                     props.navigation.navigate('ViewTasks', {
                       categoryTitle: item.category_title,
+                      categoryColor: item.category_color,
                     });
                   }}
                 />
@@ -63,7 +65,7 @@ const HomeScreen = props => {
 };
 
 const mapStateToProps = state => {
-  const categories = _.map(state.categories, (val, uid) => {
+  const categories = _.map(state?.category, (val, uid) => {
     return {...val, uid};
   });
   return {categories};

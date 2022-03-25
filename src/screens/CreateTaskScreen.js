@@ -5,31 +5,36 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Styles from '../styles/Styles';
 import {Button, InputWithoutLabel} from '../common';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {
+  addTasks,
+  titleChanged,
+  dateChanged,
+  timeChanged,
+} from '../actions/TaskActions';
+import {connect} from 'react-redux';
 
-const CreateTaskScreen = () => {
-  const [date, setDate] = useState(new Date(1598051730000));
+const CreateTaskScreen = props => {
+  const [date, setDate] = useState(new Date(Date.now()));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-  const [text, setText] = useState(false);
-
+  const [dateText, setDateText] = useState('Set Date');
+  const [timeText, setTimeText] = useState('Set Time');
   const onChange = (event, selectedDate) => {
-    console.log(selectedDate);
-
-    let tempDate = new Date(currentDate);
+    console.log('Selected date', selectedDate);
+    let tempDate = new Date(selectedDate);
     let fDate =
       tempDate.getDate() +
       '/' +
       (tempDate.getMonth() + 1) +
       '/' +
       tempDate.getFullYear();
-    let fTime =
-      'Hours: ' + tempDate.getHours() + ' | Minutes ' + tempDate.getMinutes();
+    let fTime = tempDate.getHours() + ' : ' + tempDate.getMinutes();
     console.log('Current Date: ', fDate + ' ' + fTime);
 
-    const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
-    setDate(currentDate);
-    setText(fDate + '  ' + fTime);
+    setDate(selectedDate);
+    setDateText(fDate);
+    setTimeText(fTime);
   };
 
   const showMode = currentMode => {
@@ -48,18 +53,25 @@ const CreateTaskScreen = () => {
   return (
     <AppWrapper headerText={'New Task'}>
       <View style={styles.containerCategory}>
-        <FontAwesome5 name={'circle'} size={20} color={'#676767'} solid />
+        <FontAwesome5
+          name={'circle'}
+          size={20}
+          color={props.route.params.categoryColor}
+          solid
+        />
         <Text style={[Styles.categoryText, {marginLeft: 20}]}>
-          Category Name
+          {props.route.params.categoryTitle}
         </Text>
       </View>
-      <InputWithoutLabel placeholder={'Title'} />
-      <InputWithoutLabel placeholder={'Notes'} />
+      <InputWithoutLabel
+        placeholder={'Task'}
+        onChangeText={text => onTitleChange(props, text)}
+      />
       <TouchableOpacity onPress={showDatepicker} style={styles.dateTimeBtn}>
-        <Text style={styles.dateTimeBtnText}>Set Date</Text>
+        <Text style={styles.dateTimeBtnText}>{dateText}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={showTimepicker} style={styles.dateTimeBtn}>
-        <Text style={styles.dateTimeBtnText}>Set Time</Text>
+        <Text style={styles.dateTimeBtnText}>{timeText}</Text>
       </TouchableOpacity>
 
       {show && (
@@ -69,18 +81,58 @@ const CreateTaskScreen = () => {
           mode={mode}
           is24Hour={true}
           display="default"
-          onChange={onChange}
+          onChange={event => {
+            mode === 'date'
+              ? date => {
+                  onDateChange(props, date);
+                  onChange(event, date);
+                }
+              : time => {
+                  onTimeChange(props, time);
+                  onChange(event, time);
+                };
+          }}
         />
       )}
-      <Text>{text}</Text>
       <Button
         backgroundColor={'#1AB7A7'}
         textColor={'#FFF'}
-        borderColor={'transparent'}>
+        borderColor={'transparent'}
+        onPress={() => onCreateTask(props)}>
         Create
       </Button>
     </AppWrapper>
   );
+};
+
+const onTitleChange = (props, task_title) => {
+  console.log('Task Title', task_title);
+  props.titleChanged(task_title);
+};
+
+const onDateChange = (props, task_date) => {
+  console.log('Task Date', {task_date});
+  props.dateChanged(task_date);
+};
+
+const onTimeChange = (props, task_time) => {
+  console.log('Task Time', task_time);
+  props.dateChanged(task_time);
+};
+
+const onCreateTask = props => {
+  console.log('onCreateTask pressed');
+  const {task_title, task_date, task_time} = props;
+  console.log(task_title + ' ' + task_date + ' ' + task_time);
+};
+
+const mapStateToProps = state => {
+  console.log('Map State to Props', state);
+  return {
+    task_title: state?.tasks?.task_title,
+    task_time: state?.tasks?.task_time,
+    task_date: state?.tasks?.task_date,
+  };
 };
 
 const styles = {
@@ -104,4 +156,9 @@ const styles = {
   },
 };
 
-export default CreateTaskScreen;
+export default connect(mapStateToProps, {
+  addTasks,
+  titleChanged,
+  dateChanged,
+  timeChanged,
+})(CreateTaskScreen);

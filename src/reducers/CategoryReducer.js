@@ -6,7 +6,9 @@ import {
   CATEGORIES_FETCH_SUCCESS,
 } from '../actions/types';
 
-const INITIAL_STATE = {category_title: '', category_color: ''};
+const INITIAL_STATE = {
+  categories: [],
+};
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -20,8 +22,9 @@ export default (state = INITIAL_STATE, action) => {
     case CATEGORY_TITLE_CHANGE:
       return {...state, category_title: action.payload};
     case ADD_CATEGORY:
-      // return {...state, state.category action.payload };
-      return INITIAL_STATE;
+      console.log('state/categories', state);
+      return state;
+    // return {...state, categories: action.payload};
     case CATEGORIES_FETCH_SUCCESS:
       return action.payload;
     default:

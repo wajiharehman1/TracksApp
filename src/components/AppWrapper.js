@@ -13,7 +13,7 @@ const AppWrapper = ({headerText, children}) => {
       <View>
         <TouchableOpacity
           style={stylesLocal.backArrowBtn}
-          onPress={() => navigation.navigate('Home')}>
+          onPress={() => navigation.pop()}>
           <FontAwesome5 name="arrow-left" color={'#FFF'} size={30} />
         </TouchableOpacity>
         <Text style={stylesLocal.headerText}>{headerText}</Text>
