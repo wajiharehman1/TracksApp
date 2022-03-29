@@ -29,6 +29,7 @@ export const loginUser = ({email, password}) => {
       .signInWithEmailAndPassword(email, password)
       .then(user => {
         loginUserSuccess(dispatch, user);
+        console.log('Checking user on login', user.user);
         resetFields(dispatch);
       })
       .catch(error => {

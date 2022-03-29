@@ -5,7 +5,6 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 // import NavigationService from '../NavigationService';
 
 const CategoryCard = ({onPress, category}) => {
-  // console.log('Category', category);
   const id = category.uid;
   return (
     <TouchableOpacity

@@ -22,10 +22,10 @@ export default (state = INITIAL_STATE, action) => {
     case CATEGORY_TITLE_CHANGE:
       return {...state, category_title: action.payload};
     case ADD_CATEGORY:
-      console.log('state/categories', state);
       return state;
     // return {...state, categories: action.payload};
     case CATEGORIES_FETCH_SUCCESS:
+      console.log('Categories Fetch Reducer', state);
       return action.payload;
     default:
       return state;

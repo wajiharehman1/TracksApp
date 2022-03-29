@@ -27,12 +27,10 @@ const mapStateToProps = state => {
 };
 
 const onEmailChange = (props, text) => {
-  console.log('onEmailChange', text);
   props.emailChanged(text);
 };
 
 const onPasswordChange = (props, text) => {
-  console.log('onPasswordChange', text);
   props.passwordChanged(text);
 };
 

@@ -1,0 +1,46 @@
+import React from 'react';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+
+const TaskItem = ({taskTitle, taskDatetime, status}) => {
+  const date = new Date(taskDatetime).toISOString().substring(0, 10);
+  const time = new Date(taskDatetime).toLocaleTimeString();
+  return (
+    <View style={styles.containerStyle}>
+      <TouchableOpacity style={styles.TOC}></TouchableOpacity>
+      <View style={styles.taskContainer}>
+        <Text style={styles.taskTextStyle}>{taskTitle}</Text>
+        <Text style={styles.textStyle}>{time}</Text>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  containerStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+  },
+  TOC: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    color: 'gray',
+    borderRadius: 200,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    width: '5%',
+    borderColor: '#C1C1C1',
+    marginVertical: 10,
+  },
+  taskTextStyle: {
+    color: 'gray',
+    marginBottom: 10,
+    fontSize: 15,
+  },
+  taskContainer: {
+    paddingHorizontal: 10,
+  },
+});
+
+export default TaskItem;

@@ -10,7 +10,8 @@ export const SELECT_CATEGORY_COLOR = 'select_category_color';
 export const CATEGORY_TITLE_CHANGE = 'category_title_change';
 export const CATEGORIES_FETCH_SUCCESS = 'categories_fetch_success';
 
-export const ADD_TASKS = 'add_tasks';
+export const ADD_TASK = 'add_task';
 export const TASK_TITLE_CHANGE = 'task_title_change';
 export const TASK_DATE_CHANGE = 'task_date_change';
 export const TASK_TIME_CHANGE = 'task_time_change';
+export const TASKS_FETCH_SUCCESS = 'tasks_fetch_success';

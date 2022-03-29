@@ -1,28 +1,38 @@
-import React from 'react';
-import {Text, View, useWindowDimensions} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, {useEffect} from 'react';
+import {Text, View, useWindowDimensions, FlatList} from 'react-native';
 import AppWrapper from '../components/AppWrapper';
-import {Button, InputWithoutLabel} from '../common';
-import {useNavigation} from '@react-navigation/native';
+import {Button} from '../common';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import {tasksFetch} from '../actions/TasksActions';
 import * as RootNavigation from '../NavigationService';
-const ViewTasksScreen = ({route}) => {
-  // const navigation = useNavigation();
+import _ from 'lodash';
+import {connect} from 'react-redux';
+import TaskItem from '../components/TaskItem';
+import Separator from '../components/Separator';
+const ViewTasksScreen = props => {
+  const route = props.route;
+  const selectedCategory = props.categories[props.route.params.index];
+  const tasksList = selectedCategory.tasks;
+  console.log('Selected category', selectedCategory);
+  console.log('Check tasks list', tasksList);
   const layout = useWindowDimensions();
-
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {
       key: 'today',
       title: 'Today',
       route,
+      tasksList,
     },
     {key: 'weekly', title: 'Weekly'},
     {key: 'monthly', title: 'Monthly'},
   ]);
   const categoryTitle = route.params.categoryTitle;
   return (
-    <AppWrapper headerText={categoryTitle + ' Tasks'}>
+    <AppWrapper
+      headerText={
+        categoryTitle != undefined ? categoryTitle + ' Tasks' : 'Uncategorized'
+      }>
       <TabView
         lazy
         navigationState={{index, routes}}
@@ -35,22 +45,43 @@ const ViewTasksScreen = ({route}) => {
   );
 };
 
-const todayTab = ({route}) => (
-  <View style={{flex: 1, backgroundColor: '#fff'}}>
-    <Button
-      backgroundColor={'#1AB7A7'}
-      textColor={'white'}
-      borderColor={'#1AB7A7'}
-      onPress={() => {
-        RootNavigation.navigate('CreateTask', {
-          categoryTitle: route.route.params.categoryTitle,
-          categoryColor: route.route.params.categoryColor,
-        });
-      }}>
-      Add Task
-    </Button>
-  </View>
-);
+const todayTab = ({route}) => {
+  let taskList = route.tasksList;
+  const taskKeys = Object.keys(route.tasksList);
+  return (
+    <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 10}}>
+      <FlatList
+        keyExtractor={item => item}
+        data={taskKeys}
+        ItemSeparatorComponent={Separator}
+        renderItem={({item}) => {
+          return (
+            <View>
+              <TaskItem
+                taskTitle={taskList[item].task_title}
+                taskDatetime={taskList[item].task_datetime}
+                status={taskList[item].status}
+              />
+            </View>
+          );
+        }}
+      />
+      <Button
+        backgroundColor={'#1AB7A7'}
+        textColor={'white'}
+        borderColor={'#1AB7A7'}
+        onPress={() => {
+          RootNavigation.navigate('CreateTask', {
+            categoryID: route.route.params.categoryID,
+            categoryTitle: route.route.params.categoryTitle,
+            categoryColor: route.route.params.categoryColor,
+          });
+        }}>
+        Add Task
+      </Button>
+    </View>
+  );
+};
 
 const weeklyTab = () => (
   <View style={{flex: 1, backgroundColor: 'aliceblue'}} />
@@ -96,4 +127,11 @@ const _renderTabBar = props => (
   </View>
 );
 
-export default ViewTasksScreen;
+const mapStateToProps = state => {
+  const categories = _.map(state?.category, (val, uid) => {
+    return {...val, uid};
+  });
+  return {categories};
+};
+
+export default connect(mapStateToProps, {tasksFetch})(ViewTasksScreen);

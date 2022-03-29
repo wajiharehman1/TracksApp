@@ -78,12 +78,10 @@ const ColorList = ({props, onSelect}) => {
       <FlatList
         data={categoryColors}
         renderItem={({item}) => {
-          // console.log('item in cc', item);
           return (
             <TouchableOpacity
               style={{marginRight: 15}}
               onPress={() => {
-                // console.log('Color Pressed', item.label);
                 onSelect(item.value);
                 onColorChange(props, item.value);
               }}>
