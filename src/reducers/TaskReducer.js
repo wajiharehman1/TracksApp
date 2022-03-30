@@ -20,9 +20,7 @@ export default (state = INITIAL_STATE, action) => {
     case TASK_TIME_CHANGE:
       return {...state, task_time: action.payload};
     case TASKS_FETCH_SUCCESS:
-      // console.log('Check action payload', action.payload);
       console.log('Checking action payload state', state);
-      // return action.payload;
       return {...state, tasks: action.payload};
     // return {...state, [uid]: action.payload};
     default:

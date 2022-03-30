@@ -39,10 +39,8 @@ public class MainActivity extends ReactActivity {
         public void initiateSplash() {
             //Create dialog
             createSplashView(MainActivity.this);
-
             setBackgroundImage(R.drawable.splash_bg);
             setSplashHideAnimation(SPLASHSLIDELEFT);
-
             setSplashHideDelay(1500);
 
 //            AddImageView logoImage = new AddImageView(R.drawable.logo, screenHeight * 0.5, screenWidth, 0, 0, AddImageView.FIT_XY, false);

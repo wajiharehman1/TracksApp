@@ -23,7 +23,6 @@ export const passwordChanged = text => {
 };
 
 export const loginUser = ({email, password}) => {
-  console.log('loginUser function', email + ' ' + password);
   return dispatch => {
     auth()
       .signInWithEmailAndPassword(email, password)

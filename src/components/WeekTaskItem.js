@@ -1,8 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-const TaskItem = ({taskTitle, taskDatetime, status}) => {
+const WeekTaskItem = ({taskTitle, taskDatetime, status}) => {
   const dateTime = new Date(taskDatetime);
   const todayDate = new Date(Date.now()).toISOString().substring(0, 10);
 
@@ -16,18 +15,10 @@ const TaskItem = ({taskTitle, taskDatetime, status}) => {
             hour12: true,
             hour: '2-digit',
             minute: '2-digit',
-          })}
+          }) +
+            '\t' +
+            dateTime.toLocaleDateString()}
         </Text>
-        <TouchableOpacity>
-          <FontAwesome5
-            name={'trash'}
-            size={15}
-            color={'red'}
-            style={{
-              alignSelf: 'flex-end',
-            }}
-          />
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -58,8 +49,7 @@ const styles = StyleSheet.create({
   },
   taskContainer: {
     paddingHorizontal: 10,
-    width: '100%',
   },
 });
 
-export default TaskItem;
+export default WeekTaskItem;

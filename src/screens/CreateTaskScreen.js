@@ -13,7 +13,7 @@ import {connect} from 'react-redux';
 const CreateTaskScreen = props => {
   const [date, setDate] = useState(new Date(Date.now()));
   const [open, setOpen] = useState(false);
-
+  console.log('Checking props timechange', props.task_date);
   return (
     <KeyboardAwareScrollView contentContainerStyle={{flex: 1}}>
       <AppWrapper headerText={'New Task'}>
@@ -32,6 +32,8 @@ const CreateTaskScreen = props => {
           placeholder={'Task'}
           onChangeText={text => onTitleChange(props, text)}
         />
+        {/* <Text style={{color: 'gray'}}>{props.task_datetime}</Text> */}
+
         <TouchableOpacity
           onPress={() => setOpen(true)}
           style={styles.dateTimeBtn}>
@@ -89,24 +91,26 @@ const onCreateTask = props => {
   const {task_title, task_date} = props;
   const {categoryID, categoryTitle, categoryColor} = props.route.params;
   const task_datetime = task_date.toISOString();
-  console.log('Checking if index is here', props.route.params.index);
-  // props.addTasks({
-  //   task_title,
-  //   task_datetime,
-  //   category_id: categoryID,
-  //   category_title: categoryTitle,
-  //   category_color: categoryColor,
-  //   status: 'pending',
-
-  // });
+  props.addTasks({
+    task_title,
+    task_datetime,
+    category_id: categoryID,
+    category_title: categoryTitle,
+    category_color: categoryColor,
+    status: 'pending',
+    index: props.route.params.index,
+  });
 };
 
 const mapStateToProps = state => {
-  console.log('CreateTaskScreen Map State to Props\n', state);
+  // console.log('Task Title check', state.tasks.task_title);
+  // if (state.tasks.task_title == null || state.tasks.task_title == undefined) {
+  //   // set some message but where?
+  // }
   return {
     task_title: state?.tasks?.task_title,
-    task_time: state?.tasks?.task_time,
-    task_date: state?.tasks?.task_date,
+    task_datetime: state?.tasks?.task_time,
+    // task_date: state?.tasks?.task_date,
     status: state?.tasks?.status,
   };
 };

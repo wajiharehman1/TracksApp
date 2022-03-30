@@ -54,7 +54,6 @@ export const tasksFetch = category_id => {
 };
 
 export const titleChanged = task_title => {
-  console.log('Task Actions', task_title);
   return {
     type: TASK_TITLE_CHANGE,
     payload: task_title,
@@ -62,17 +61,8 @@ export const titleChanged = task_title => {
 };
 
 export const dateChanged = task_date => {
-  console.log('Task Actions', task_date);
   return {
     type: TASK_DATE_CHANGE,
     payload: task_date,
   };
 };
-
-// export const timeChanged = ({task_time}) => {
-//   console.log('Task Actions', task_time);
-//   return {
-//     type: TASK_TIME_CHANGE,
-//     payload: task_time,
-//   };
-// };
