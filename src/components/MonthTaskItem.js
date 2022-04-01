@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   },
   taskContainer: {
     paddingHorizontal: 10,
+    width: '100%',
   },
 });
 

@@ -1,11 +1,13 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
   useWindowDimensions,
   FlatList,
   StyleSheet,
+  TouchableWithoutFeedback,
 } from 'react-native';
+import moment from 'moment';
 import AppWrapper from '../components/AppWrapper';
 import {Button} from '../common';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
@@ -17,19 +19,23 @@ import TaskItem from '../components/TaskItem';
 import WeekTaskItem from '../components/WeekTaskItem';
 import MonthTaskItem from '../components/MonthTaskItem';
 import Separator from '../components/Separator';
-
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Accordion from 'react-native-collapsible/Accordion';
 const ViewTasksScreen = props => {
   const route = props.route;
   const selectedCategory = props.categories[props.route.params.index];
-  // console.log('Index in ViewTasksScreen', props.route.params.index);
   const tasksList = selectedCategory.tasks;
-  // console.log('Selected category', selectedCategory);
   const taskKeys = Object.keys(tasksList);
 
-  // const todayTasks = tasksList.map(task => console.log('Task Show', task));
+  const todayTasks = taskKeys.map(tk =>
+    console.log('--> Task Show', tasksList[tk]),
+  );
 
-  // console.log('Check tasks list object', tasksList[taskKeys[0]]);
   const todayDate = new Date(Date.now());
+  // const todayDate2 = moment().fromNow();
+  // console.log('Show today date', todayDate2);
+
+  console.log('todayDate', todayDate);
   const todaysTaskListKeys = taskKeys.filter(taskKey => {
     const taskDate = new Date(tasksList[taskKey].task_datetime)
       .toISOString()
@@ -139,11 +145,36 @@ const todayTab = ({route}) => {
 
 const weeklyTab = ({route}) => {
   let taskList = route.weeksTaskList;
+  console.log('Tasks List show on weeklyTab', taskList);
+  const daysSet = new Set();
+  const [state, setState] = useState({
+    activeSections: [],
+    multipleSelect: true,
+    collapsed: true,
+  });
+
+  let task = [
+    {day: 'Sunday', tasks: []},
+    {day: 'Monday', tasks: []},
+    {day: 'Tuesday', tasks: []},
+    {day: 'Wednesday', tasks: []},
+    {day: 'Thursday', tasks: []},
+    {day: 'Friday', tasks: []},
+    {day: 'Saturday', tasks: []},
+  ];
+
+  taskList.map(tk => {
+    const taskDay = new Date(tk.task.task_datetime).getDay();
+    task[taskDay].tasks.push(tk);
+  });
+  const tasksByDay = task.filter(taskObj => taskObj.tasks.length > 0);
+  console.log('Tasks by Day', tasksByDay);
+
   return (
     <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 10}}>
       <FlatList
         keyExtractor={item => item.id}
-        data={taskList}
+        data={tasksByDay}
         ItemSeparatorComponent={Separator}
         ListEmptyComponent={() => {
           return (
@@ -153,13 +184,10 @@ const weeklyTab = ({route}) => {
           );
         }}
         renderItem={({item}) => {
+          console.log('Item in outer flatlist', item);
           return (
             <View>
-              <WeekTaskItem
-                taskTitle={item.task.task_title}
-                taskDatetime={item.task.task_datetime}
-                status={item.task.status}
-              />
+              <WeekTaskItem day={item.day} tasks={item.tasks} />
             </View>
           );
         }}
@@ -187,7 +215,7 @@ const monthlyTab = ({route}) => {
         renderItem={({item}) => {
           return (
             <View>
-              <MonthTaskItem
+              <TaskItem
                 taskTitle={item.task.task_title}
                 taskDatetime={item.task.task_datetime}
                 status={item.task.status}
@@ -256,6 +284,41 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginVertical: 20,
   },
+  containerStyle: {
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+  },
+  TOC: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    color: 'gray',
+    borderRadius: 200,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    width: '5%',
+    borderColor: '#C1C1C1',
+    marginVertical: 10,
+  },
+  taskTextStyle: {
+    color: 'black',
+    marginBottom: 10,
+    fontSize: 15,
+  },
+  taskContainer: {
+    paddingHorizontal: 10,
+    width: '100%',
+  },
+  collapseTouchable: {
+    width: '100%',
+    backgroundColor: 'blue',
+  },
+  collapseTouchableText: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+  },
 });
-
 export default connect(mapStateToProps, {tasksFetch})(ViewTasksScreen);

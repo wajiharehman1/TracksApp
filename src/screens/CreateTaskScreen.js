@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 
 const CreateTaskScreen = props => {
   const [date, setDate] = useState(new Date(Date.now()));
+  console.log('Date on render of CreateTask', date);
   const [open, setOpen] = useState(false);
   console.log('Checking props timechange', props.task_date);
   return (
@@ -57,6 +58,7 @@ const CreateTaskScreen = props => {
           onConfirm={date => {
             setOpen(false);
             setDate(date);
+            console.log('Date on save of date', date);
             onDateTimeChange(props, date);
           }}
           minimumDate={new Date(Date.now())}
@@ -90,7 +92,8 @@ const onDateTimeChange = (props, task_date) => {
 const onCreateTask = props => {
   const {task_title, task_date} = props;
   const {categoryID, categoryTitle, categoryColor} = props.route.params;
-  const task_datetime = task_date.toISOString();
+  console.log('Task date', task_date + ' type ' + typeof task_date);
+  const task_datetime = new Date(task_date).toISOString();
   props.addTasks({
     task_title,
     task_datetime,
@@ -109,8 +112,8 @@ const mapStateToProps = state => {
   // }
   return {
     task_title: state?.tasks?.task_title,
-    task_datetime: state?.tasks?.task_time,
-    // task_date: state?.tasks?.task_date,
+    // task_datetime: state?.tasks?.task_time,
+    task_date: state?.tasks?.task_date,
     status: state?.tasks?.status,
   };
 };

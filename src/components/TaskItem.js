@@ -24,7 +24,9 @@ const TaskItem = ({taskTitle, taskDatetime, status}) => {
             size={15}
             color={'red'}
             style={{
-              alignSelf: 'flex-end',
+              position: 'absolute',
+              right: 10,
+              bottom: 20,
             }}
           />
         </TouchableOpacity>
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   taskTextStyle: {
-    color: 'gray',
+    color: 'black',
     marginBottom: 10,
     fontSize: 15,
   },
